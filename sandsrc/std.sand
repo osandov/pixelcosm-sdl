@@ -1,0 +1,653 @@
+# Standard Sand Source v0.0
+#
+# This is the sand source file providing the standard set of elements
+# and interactions. Although you can edit this file directly, it is
+# recommended that you use mod.sand to add custom elements and
+# interactions.
+
+################################Groups##################################
+
+Group Natural
+Subgroup Natural:Water standard:1
+Subgroup Natural:Powder standard:2
+
+Group Volatile
+Subgroup Volatile:Fire standard:4
+Subgroup Volatile:Explosive standard:5
+
+Group Constructive
+Subgroup Constructive:Building standard:6
+
+Group Complex
+Subgroup Complex:Space standard:8
+
+#############################ElementGroups##############################
+
+ElementGroup living
+
+################################Natural#################################
+Element sand: Natural:Powder
+	color = 240, 220, 120
+	mass = 20
+	entropy = 0.05
+
+Element soil:
+	color = 92, 67, 22
+	mass = 30
+	entropy = 0.05
+
+Element water: Natural:Water
+	color = 0, 35, 180
+	mass = 15
+	entropy = 0.1
+
+Interaction sand::water soil::none 0.04
+
+Interaction soil::sand soil::soil 0.001
+
+Element salt: Natural:Powder
+	color = 210, 210, 210
+	mass = 20
+	entropy = 0.07
+
+Element saltwater: Natural:Water (discover)
+	color = 0, 70, 180
+	mass = 17
+	entropy = 0.1
+
+Interaction salt::water none::saltwater 0.1
+Copy water To saltwater
+
+Element snow: Natural:Water (discover)
+	color = 195, 210, 235
+	mass = 60
+	entropy = 0.3
+	initforce = 0.5
+
+Element ice: Natural:Water
+	color = 215, 230, 255
+	mass = 90
+
+Interaction snow::water water::water 0.001
+Interaction ice::water ice::ice 0.005
+
+Element steam: Natural:Water (discover)
+	color = 180, 195, 255
+	mass = 5
+	entropy = 0.2
+	initforce = 0.5
+	decays = true
+	decaysto = water
+	lifespan = 1.0, 15.0
+
+Interaction steam::ice steam::snow 0.05
+Interaction steam::snow snow::snow 0.01
+
+Element stone: Natural:Powder
+	color = 130, 130, 130
+	mass = 40
+
+ElementGroup tree
+ElementGroup growable
+
+Element seed: Natural
+	elemgroups = tree, living
+	color = 0, 200, 25
+	mass = 18
+	decays = true
+	lifespan = 15.0, 30.0
+
+Element bark:
+	elemgroups = tree, living
+	color = 88, 44, 0
+	mass = 100
+
+Element flower:
+	elemgroups = tree, living
+	color = 255, 60, 60
+	mass = 100
+
+Element apical_meristem:
+	elemgroups = tree, living
+	color = 88, 66, 0
+	interpattern = up
+	mass = 100
+	decays = true
+	decaysto = flower
+	lifespan = 1.0, 3.0
+
+Element petal:
+	elemgroups = tree, living
+	color = 255, 59, 59
+	mass = 100
+
+Element pollen:
+	elemgroups = tree, living
+	color = 230, 230, 0
+	mass = 100
+	decays = true
+	lifespan = 0.1
+
+Element stem:
+	elemgroups = tree, living
+	color = 0, 210, 25
+	mass = 100
+	decays = true
+	decaysto = flower
+	lifespan = 0.5, 1.0
+
+Element leaf:
+	elemgroups = tree, living
+	color = 0, 220, 25
+	mass = 100
+
+Add sand To growable
+Add soil To growable
+Add water To growable
+Add seed To growable
+Add none To growable
+
+Interaction seed::soil apical_meristem::soil 0.005
+
+Interaction apical_meristem::*growable swap(bark) 0.08
+
+Interaction apical_meristem::none apical_meristem::apical_meristem 0.001
+
+Interaction apical_meristem::none apical_meristem::stem 0.004
+
+
+Interaction stem::*growable swap(leaf) 0.05
+
+Interaction flower::none flower::petal 0.1
+
+Interaction petal::none pollen::none 0.0001
+
+Interaction pollen::none pollen::seed 1.0
+
+Interaction pollen::seed repel(0.1) 1.0
+
+###############################Volatile#################################
+
+Element fire: Volatile:Fire
+	color = 200, 0, 0
+	mass = 1
+	entropy = 0.1
+	initforce = 0.5
+	decays = true
+	lifespan = 0.1, 0.75
+
+Element burner: Volatile:Fire
+	color = 125, 0, 0
+	mass = 100
+
+Element smoke: Natural (discover)
+	color = 64, 64, 64
+	mass = 5
+	entropy = 0.2
+	initforce = 0.25
+	decays = true
+	lifespan = 0.5, 1.0
+
+Interaction fire::ice none::water 0.5
+Interaction fire::snow none::water 0.5
+Interaction fire::water fire::steam 0.005
+Interaction saltwater::fire salt::steam 0.005
+
+Interaction fire::*tree fire::fire 0.1
+Interaction fire::*tree fire::smoke 0.005
+
+Interaction burner::none burner::fire 1.0
+Interaction burner::water burner::steam 0.1
+
+
+Element lightning: Volatile
+	color = 205, 240, 255
+	interpattern = down
+	intercount = 20
+	intertowards = iron, steel
+	towardsrange = 100.0
+	mass = 100
+	decays = true
+	lifespan = 0.63
+
+Element lightning_bolt:
+	color = 205, 240, 254
+	mass = 100
+	decays = true
+	lifespan = 0.7
+
+Element lightning_strike:
+	color = 203, 241, 253
+	mass = 100
+	decays = true
+	lifespan = 0.1
+
+Interaction lightning::none swap(lightning_bolt) 1.0
+Interaction lightning::*any lightning_strike::* 1.0
+Exclude lightning_bolt From lightning::*any
+Exclude fire From lightning::*any
+
+Interaction lightning_bolt::*any none::* 1.0
+Interaction lightning_strike::*any angle(90.0, 1.0) 1.0
+Exclude lightning From lightning_bolt::*any
+Copy fire To lightning_strike
+
+Element gunpowder: Volatile:Explosive
+	color = 55, 55, 55
+	mass = 30
+	entropy = 0.01
+
+Element burning_gunpowder:
+	color = 56, 55, 55
+	mass = 30
+	entropy = 0.01
+	decays = true
+	lifespan = 0.25, 1.0
+
+Interaction fire::gunpowder fire::burning_gunpowder 1.0
+Interaction burning_gunpowder::gunpowder burning_gunpowder::burning_gunpowder 1.0
+Interaction burning_gunpowder::none swap() And repel(0.3) 0.5
+Interaction burning_gunpowder::fire swap() And repel(0.3) 0.5
+Interaction burning_gunpowder::none burning_gunpowder::fire 0.1
+
+Element firework: Volatile:Explosive (discover)
+	color = 240, 190, 120
+	mass = 20
+
+Element firework_ember_red:
+	color = 253, 0, 0
+	mass = 30
+	initforce = 1.0
+	decays = true
+	decaysto = smoke
+	lifespan = 1.0, 1.5
+
+Element firework_ember_green:
+	color = 0, 200, 0
+	mass = 30
+	initforce = 1.0
+	decays = true
+	decaysto = smoke
+	lifespan = 1.0, 1.5
+
+Element firework_ember_blue:
+	color = 0, 100, 255
+	mass = 30
+	initforce = 1.0
+	decays = true
+	lifespan = 1.0, 1.5
+
+Element firework_burst:
+	color = 241, 70, 0
+	mass = 100
+	decays = true
+	lifespan = 0.15
+
+Element lit_firework:
+	color = 241, 190, 120
+	mass = 0
+	entropy = 0.05
+	decays = true
+	decaysto = firework_burst
+	lifespan = 1.8, 2.0
+
+Interaction gunpowder::sand none::firework 0.1
+
+Interaction firework::fire lit_firework::fire 0.25
+Interaction lit_firework::firework lit_firework::lit_firework 0.25
+
+Interaction firework_burst::none firework_burst::firework_ember_red 0.4
+Interaction firework_burst::none firework_burst::firework_ember_green 0.4
+Interaction firework_burst::none firework_burst::firework_ember_blue 0.4
+
+Element mortar: Volatile:Explosive (discover)
+	color = 20, 50, 20
+	mass = 50
+
+Element mortar_projectile:
+	color = 199, 199, 0
+	mass = 15
+	initforce = 1.0
+	decays = true
+	decaysto = fire
+	lifespan = 0.2
+
+Element mortar_blast:
+	color = 199, 99, 0
+	mass = 15
+	initforce = 1.0
+	entropy = 0.5
+	decays = true
+	decaysto = fire
+	lifespan = 0.5, 1.0
+
+Interaction gunpowder::stone none::mortar 0.05
+
+Interaction fire::mortar fire::mortar_projectile 0.1
+
+Interaction mortar_projectile::mortar mortar_projectile::mortar_projectile 0.5
+Interaction mortar_projectile::*any mortar_projectile::mortar_blast And repel(0.5) 0.1
+Interaction mortar_projectile::none mortar_projectile::mortar_blast And repel(0.5) 0.1
+
+Interaction mortar_blast::none mortar_blast::fire And repel(1.0) 0.1
+Interaction mortar_blast::*any mortar_blast::fire 0.5
+
+Exclude mortar From mortar_projectile::*any
+Exclude mortar From mortar_blast::*any
+Exclude mortar_projectile From mortar_blast::*any
+Exclude fire From mortar_blast::*any
+Exclude water From mortar_blast::*any
+
+Element virion: Volatile
+	color = 128, 0, 255
+	mass = 11
+	decays = true
+	lifespan = 10.0, 15.0
+
+Interaction virion::none swap() 0.3
+
+Interaction virion::*living virion::virion 0.05
+
+Interaction water::virion water::none 0.5
+
+Interaction fire::virion fire::none 0.01
+
+Element acid: Volatile
+	color = 255, 0, 60
+	mass = 15
+	entropy = 0.1
+
+Element acid_bubble:
+	color = 255, 215, 225
+	mass = 11
+	initforce = 1.0
+	decays = true
+	lifespan = 0.5, 1.0
+
+Interaction acid::*any acid_bubble::none 0.01
+Exclude acid_bubble From acid::*any
+Exclude water From acid::*any
+
+Element volcano: Volatile:Fire
+	color = 110, 38, 0
+	mass = 100
+
+Element lava: Volatile:Fire (discover)
+	color = 200, 100, 0
+	mass = 35
+	entropy = 0.05
+
+Element magma:
+	color = 255, 128, 0
+	mass = 31
+	decays = true
+	decaysto = lava
+	lifespan = 1.0, 3.0
+	entropy = 0.08
+
+Element eruption:
+	color = 150, 50, 0
+	mass = 100
+	decays = true
+	lifespan = 0.3
+
+Interaction volcano::none eruption::none 0.0005
+Interaction eruption::none eruption::magma 1.0
+Interaction volcano::eruption none::eruption And repel(5.0) 1.0
+Interaction lava::none lava::fire 0.0015
+Interaction magma::concrete fire::magma 0.01
+Interaction lava::concrete fire::lava 0.005
+
+Copy fire To lava
+Copy fire To magma
+
+Interaction lava::stone lava::lava 0.002
+
+Interaction water::lava water::stone 0.05
+
+Interaction magma::none magma::fire 0.03
+
+###########################Constructive#################################
+
+Element earth: Constructive:Building
+	color = 200, 150, 50
+	mass = 100
+
+Interaction fire::earth fire::none 0.05
+
+Element glass: Constructive (discover)
+	color = 3, 3, 3
+	mass = 100
+
+Exclude glass From acid::*any
+
+Element heated_sand:
+	color = 150, 0, 0
+	mass = 100
+	decays = true
+	decaysto = glass
+	lifespan = 0.2, 0.7
+
+Interaction lightning_strike::sand lightning_strike::heated_sand 1.0
+Interaction heated_sand::sand heated_sand::glass 1.0
+
+Element off_bulb:
+	color = 255, 255, 49
+	mass = 100
+	decays = true
+	decaysto = glass
+	lifespan = 0.1
+
+Element bulb:
+	color = 255, 255, 50
+	mass = 100
+	decays = true
+	decaysto = off_bulb
+	lifespan = 0.1
+
+Interaction wire::glass wire::bulb 1.0
+Interaction bulb::glass bulb::bulb 1.0
+Exclude glass From lightning::*any
+Exclude bulb From lightning::*any
+
+Element cement: Constructive (discover)
+	color = 120, 120, 120
+	mass = 50
+
+Element concrete: Constructive:Building (discover)
+	color = 100, 100, 100
+	mass = 100
+
+Interaction sand::stone cement::cement 0.01
+
+Element wet_cement:
+	color = 110, 110, 110
+	mass = 70
+	decays = true
+	decaysto = concrete
+	lifespan = 1.0, 3.0
+
+Interaction water::cement none::wet_cement 0.5
+Interaction water::wet_cement none::wet_cement 0.5
+Interaction wet_cement::cement wet_cement::wet_cement 0.01
+
+
+Element iron: Constructive:Building
+	color = 163, 163, 163
+	mass = 100
+
+Element melted_iron:
+	color = 209, 17, 0
+	mass = 90
+	entropy = 0.01
+	decays = true
+	decaysto = iron
+	lifespan = 5.0, 10.0
+
+Element wire:
+	color = 255, 255, 48
+	mass = 100
+
+Interaction lightning::iron none::wire 1.0
+
+Interaction wire::iron swap() 0.5
+
+Element steel: Constructive:Building (discover)
+	color = 200, 200, 200
+	mass = 100
+
+Element molten_steel:
+	color = 255, 50, 0
+	mass = 90
+	entropy = 0.01
+	decays = true
+	decaysto = steel
+	lifespan = 5.0, 10.0
+
+Element rust:
+	color = 147, 54, 0
+	mass = 20
+	decays = true
+	lifespan = 15.0, 25.0
+
+Interaction fire::iron fire::melted_iron 0.5
+Interaction melted_iron::iron melted_iron::melted_iron 0.001
+Interaction melted_iron::water steel::water 0.5
+
+Interaction water::iron rust::water 0.01
+Interaction water::rust none::none 0.0001
+
+Interaction magma::steel magma::molten_steel 0.1
+Interaction lava::steel lava::molten_steel 0.05
+
+Exclude iron From acid::*any
+Exclude steel From acid::*any
+Exclude rust From acid::*any
+
+Interaction acid::iron acid_bubble::rust 0.03
+Interaction acid::steel acid_bubble::rust 0.01
+
+Element oil: Constructive
+	color = 100, 20, 10
+	mass = 12
+	entropy = 0.11
+
+Element burning_oil:
+	color = 101, 20, 10
+	mass = 12
+	decays = true
+	lifespan = 3.0, 10.0
+	entropy = 0.11
+
+Interaction fire::oil fire::burning_oil 0.2
+Interaction burning_oil::oil burning_oil::burning_oil 0.5
+Interaction burning_oil::none burning_oil::fire 0.03
+Interaction burning_oil::none burning_oil::smoke 0.0005
+
+##############################Complex###################################
+
+Element worm: Complex
+	elemgroups = living
+	intertowards = seed
+	color = 185, 115, 85
+	mass = 10
+
+Element wormtail:
+	elemgroups = living
+	color = 185, 115, 84
+	mass = 100
+	decays = true
+	lifespan = 0.5
+
+Interaction worm::none swap(wormtail) 0.3
+Interaction worm::earth swap(wormtail) 0.35
+Interaction fire::worm none::none 1.0
+Interaction fire::wormtail fire::fire 0.4
+Interaction worm::seed worm::none 0.1
+Interaction worm::seed worm::worm 0.01
+
+Element dormant_worm:
+	elemgroups = living
+	intertowards = seed
+	color = 155, 85, 55
+	mass = 11
+	decays = true
+	decaysto = worm
+	lifespan = 5.0, 15.0
+
+Interaction smoke::worm smoke::dormant_worm 0.05
+Interaction fire::dormant_worm none::none 1.0
+
+
+Element snake: Complex
+	elemgroups = living
+	intertowards = worm
+	color = 0, 100, 35
+	mass = 10
+
+Element snaketail:
+	elemgroups = living
+	color = 0, 99, 35
+	mass = 100
+	decays = true
+	lifespan = 1.0
+
+Interaction snake::none swap(snaketail) 0.25
+Interaction fire::snake none::none 1.0
+Interaction fire::snaketail fire::fire 0.3
+Interaction snake::worm snake::none 0.5
+Interaction snake::wormtail swap(snaketail) 0.5
+
+Element black_hole: Complex:Space
+	color = 50, 50, 50
+	mass = 100
+
+Interaction black_hole::none attract(5.0) 1.0
+Interaction black_hole::*any black_hole::none 1.0
+
+
+Element white_hole: Complex:Space
+	color = 254, 254, 254
+	mass = 100
+
+Interaction white_hole::none repel(5.0) 1.0
+Interaction white_hole::*any white_hole::none 1.0
+
+
+Element force_buffer: Complex
+	color = 128, 128, 128
+	mass = 100
+
+Interaction force_buffer::none cancel_force() 1.0
+Interaction force_buffer::*any cancel_force() 1.0
+
+
+Element anomaly2:
+	color = 127, 127, 127
+	mass = 100
+	decays = true
+	lifespan = 0.09, 0.7
+
+Element anomaly: Complex:Space (discover)
+	color = 253, 253, 253
+	mass = 100
+	decays = true
+	decaysto = anomaly2
+	lifespan = 0.15
+
+Interaction anomaly::*any anomaly::anomaly 0.4
+
+Interaction anomaly::none anomaly::anomaly 0.4
+
+Exclude anomaly2 From anomaly::*any
+
+Interaction black_hole::white_hole anomaly::none 1.0
+
+Exclude white_hole From black_hole::*any
+Exclude anomaly From black_hole::*any
+Exclude black_hole From white_hole::*any
+Exclude anomaly From white_hole::*any
+Exclude force_buffer From anomaly::*any
+
+##############################Include Mods##############################
+Include mod.sand

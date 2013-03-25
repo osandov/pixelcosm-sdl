@@ -1,0 +1,158 @@
+Sand Source v1.0
+
+The Sandbox environment is loaded in an entirely dynamic fashion; every element and interaction is loaded at run-time from a Sand Source file rather than hard-coded into the game. This allows for highly modifiable gameplay and extensive experimentation. Core functionality is achieved through element declarations and interaction definitions, with other statements serving a secondary support role. The Sand Source syntax is terse and goal-driven.
+
+The following is the documentation of the Sand Source scripting language.
+
+% INCLUDES
+
+You may include another file from within a Sand Source script by using:
+
+Include [file name]
+
+The file will be searched for relative to the 'sandsrc' path and will be parsed following the completion of the current file.
+
+% GROUPS
+
+Groups are used for categorization and display. Elements (see below) are classified into Groups, which are then shown and accessed through the menu. Definition of a Group is simple:
+
+Group [name]
+
+E.g.,
+
+Group Glitch
+
+Note that it is required that "Group" be capitalized, and it is recommended that the name be capitalized as well. Use underscores instead of spaces; they will be replaced with spaces for display purposes.
+
+In order to create a Group, an icon must be provided. This icon must be a bitmap ('.bmp') file with the same name as the Group and must be located in the 'groups' folder in the resources path available to the executable. For example, an image named 'Glitch.bmp' would need to be located in the 'resources/groups' folder in order to use the above group. The bitmap should have the dimensions 40 x 40 (in pixels). Multiple frames can be stacked on top of one another if animation is desired. E.g., a 40 x 160 bitmap will be animated in four frames. Animation occurs with each frame evenly split over one second. In the above example, each frame would be displayed for one-quarter of a second. See the 'resources/groups' folder for examples.
+
+It is usually not necessary to define new groups, as most Elements can be
+classified into one of the standard groups.
+
+% SUBGROUPS
+
+Subgroups are used as classifications within Groups to keep the menu more organized. In order to create a Subgroup, an icon must be provided, although there is a set of standard icons provided. Icon sets are bitmaps of 20 x 20 icons stacked vertically and are contained in resources/groups/subgroups. Subgroups are declared as such:
+
+Subgroup [group name]:[name] [image file]:[icon number]
+
+E.g.,
+
+Subgroup Glitch:Unknown standard:5
+
+This will create Unknown as a Subgroup of Glitch using the 5th icon in standard.bmp.
+
+% ELEMENTS
+
+The fundamental unit of a Sand Source is the Element. An Element is a set of characteristics which defines a particle's appearance and behavior.
+
+The characteristics, called parameters, of an element are as follows:
+	elemgroups	A list of the ElementGroups (discussed below) to which the element belongs
+			@Optional, comma-separated list
+
+	color	An RGB (red, green, blue) representation of the color of the element.
+		@Optional. Comma-separated integer R, G, B values within the range [0, 255]. Defaults to 255, 255, 255 (white). It is recommended that each element have a unique color. There are 16777216 (nearly 17 million) colors possible.
+
+	mass	Determines the motion and collision of the element particle. A value below 10 makes the element lighter than air and thus rise; a value of 100 makes the element solid; the lower the value, the more freely an element particle moves; a value above 90 means the element is solid enough to resist gravity but will still be susceptible to other forces.
+		@Mandatory, integer within the range [0, 100].
+
+	interpattern	The pattern with which element particles will interact.
+			@Optional, either 'uniform', 'up', or 'down'; defaults to 'uniform'.
+
+	intercount	The number of times an element particle will interact in a single frame.
+			@Optional, positive integer; defaults to 1. Note that it is rare for this to be required.
+
+	intertowards	A list of Elements towards which an element particle will tend to interact
+			@Optional, comma-separated list
+
+	towardsrange	The maximum distance which an Element particle that the particle tends to interact towards can be from the particle.
+			@Optional, positive decimal number; if not specified, there is no maximum
+
+	entropy	Determines the randomness of the movement of the element particle; a higher value makes it spread more, while a lower value maintains linear motion.
+		@Optional, decimal number within the range [0.0, 1.0]; defaults to 0.0.
+
+	initforce	The initial force with which an element particle is created.
+		@Optional, unbounded positive decimal number; defaults to 0.0.
+
+	decays	Whether the element decays over time.
+		@Optional, boolean ('true' or 'false'); defaults to 'false'.
+	
+	decaysto	The name of the Element which the element particle becomes once it decays.
+			@Optional, invalid if decays is false
+
+	lifespan	The lower and upper limits, respectively, of the amount of time an element particle can remain active before disappearing.
+			@Mandatory if decays is true, invalid otherwise, two (comma-separated) non-negative decimal numbers
+
+As you can see, the only mandatory parameter is mass, although color should generally be specified. The other parameters default to a null value. Although it is not required that parameters be defined in the given order, it is in good form to do so.
+
+Names must be one single word, but special characters, including underscores, can be used within the word. As with Groups, underscores will be replaced with spaces for display purposes. It is recommended that Element names be entirely lowercase. The name 'none' cannot be used as it is a special identifier for interactions.
+
+Elements are denotated by the 'Element' keyword followed by a name and a colon (':'). Following the colon is the Group to which the element belongs; if this is not specified, the Element is classified into a placeholder Group 'None' and is not accessible via the menu. In addition, adding '(discover)' after the Group name hides the Element from the menu until it is collected. The Element's parameters then follow on indented lines. The Element definition is complete once the next keyword is encountered. Examples follow.
+
+Element missingno: Glitch	<-- missingno is in the Glitch group
+	color = 128, 112, 152	<-- Note the indented line and R, G, B values
+	mass = 5		<-- This element has a low mass
+	entropy = 0.75		<-- It has a very high entropy, however
+	initforce = 0.25	<-- Particles are created with initial acceleration
+	decays = true		<-- This element naturally dies
+	lifespan = 10.0, 20.0	<-- A particle can last between 10 and 20 seconds
+
+Element badegg:			<-- badegg is in the 'None' group and can't be selected
+	color = 240, 240, 168	<-- Again, notice that these lines are indented
+	mass = 100		<-- This element is solid
+
+Notice that the Element badegg does not specify entropy, initforce, or decays. Entropy and initforce are superfluous for a solid element, and badegg does not decay. On the other hand, missingno specifies more parameters.
+
+For more examples, see std.sand.
+
+% ELEMENTGROUPS
+
+ElementGroups are distinct from Groups in that they are only used for Interactions and not for display. An ElementGroup is declared as follows:
+
+ElementGroup [name]
+
+% INTERACTIONS
+
+The second major component of a sand source file is the Interaction. Interactions specify the action taken when two particles touch, which can involve changing particle elements and creating forces, among other things.
+
+Interactions are written with the following syntax:
+Interaction first-element::second-element [action] [frequency]
+
+Frequencies are written as decimals between 0 and 1.
+
+The first and simplest type of Interaction is the element change. An element change action is written as an analogy to the two inital elements.
+
+Interaction first-element::second-element new-first::new-second [frequency]
+
+E.g.,
+
+Interaction missingno::badegg missingno::missingno 0.5
+
+The above interaction will turn any badegg particle touching a missingno particle into another missingno particle 50% of the time.
+
+A resulting particle of element 'none' will disappear. E.g.,
+
+Interaction missingno::missingno missingno::none 0.05
+
+In the above interaction, when two missingno particles touch, one is destroyed 5% of the time.
+
+
+The special identifier 'none' can be used to specify an interaction with an adjacent empty space. E.g,
+
+Interaction badegg::none badegg::badegg 0.01
+
+In the above interaction, badegg will slowly spread to empty spaces.
+
+There are also generic interactions with ElementGroups. These interactions are specified with the wildcard character '*'. The automatically created and populated ElementGroup 'any' can be used to specify an interaction with any other Element. E.g.,
+
+Interaction badegg::*any badegg::badegg 0.005
+
+In this interaction, badegg will also spread even more slowly to other elements.
+
+The next types of interactions are 'repel' and 'attract' interactions. When this type of reaction occurs, a repulsion or attraction force is created at the point of interaction. These interactions follow the syntax:
+
+Interaction first-element::second-element [repel/attract]([force]) [frequency]
+
+E.g.,
+
+Interaction badegg::missingno repel(0.5) 0.25 
+

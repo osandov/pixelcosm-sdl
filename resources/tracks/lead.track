@@ -1,0 +1,26 @@
+# Lead Beater - These Arms Are Snakes
+bass = square
+melody = square
+style = legato
+70 BPM
+
+|:
+|:
+
+Bm	1		8vb
+F#	1.5
+Bm	0.5		8vb
+Bm	0.25	8vb
+*Bb	0.25	8vb
+-	0.5
+:|
+
+|:
+Bm	1		8vb
+Fo	1.5
+Bm	0.5		8vb
+Bm	0.25	8vb
+*Bb	0.25	8vb
+-	0.5
+:|
+:| x4

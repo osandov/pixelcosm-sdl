@@ -1,0 +1,69 @@
+bass = square
+melody = triangle
+140 BPM
+
+|:
+
+|:
+C	4
+F	4
+C	4
+G	4
+:| x2
+
+|:
+
+|:
+Cii	1
+C	1
+:| x4
+
+|:
+Am	1
+C	1
+:| x4
+
+:|
+
+|:
+Gi	1
+C	1
+:| x4
+
+|:
+Fi	1
+C	1
+:| x4
+
+|:
+F	1
+C	1
+:| x4
+
+|:
+Cii	1
+C	1
+:| x2
+
+|:
+Ci	1
+C	1
+:| x2
+
+:|
+
+Cii	1
+Fi	1
+G7	1
+F	1
+Ci	1
+C	1
+C	2
+
+Cii	2
+Fi	2
+G7	2
+F	2
+Ci	2
+C	2
+C	4

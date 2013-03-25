@@ -1,0 +1,10 @@
+# Mod Sand Source
+#
+# This is the preferred sand source file for custom elements and
+# interactions. This file is loaded in std.sand, so you can use and
+# reference the standard elements.
+#
+# See resources/doc/sandsrc for the language documentation.
+#
+# External mods should be installed in the 'sandsrc/mods' directory
+# and included from here.

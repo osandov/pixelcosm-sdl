@@ -1,0 +1,31 @@
+Sand Track v1.0 Documentation
+
+PixelCosm allows for dynamically-loaded and runtime-generated music based on a provided chord progression track and events in gameplay. This essentially means that music can be created using an outline of a song and a melody added by the player's actions. The fundamental part of the music generator is the chord progression outline, specified in .track files using the Sand Track scripting language.
+
+The Sand Track language has a simple syntax designed to reflect its musical purpose as opposed to its programming basis. It consists solely of chord specifications and descriptors like tempo markings. Every track file must begin with a header, which can include a bass waveform selection, melody waveform selection, style, and a tempo specification in beats per minute, e.g., '120 BPM'. The tempo markig is the only mandatory entry for the header. A new tempo may be specified in the same manner at any point in the track. Tempo markings must always be followed by 'BPM' to be recognized.
+
+The fundamental part of the Sand Track language is the chord line. Automatically played tones in the game will be part of the specified chord at that time. A chord line consists of two parts: the chord specifier and a duration in beats. These two components must be separated by a tab character. E.g.,
+
+C#m7	4
+
+The above line would indicate a C-sharp minor seventh chord lasting for 4 beats.
+
+Chord specifiers allow for the representation of every chord commonly used in Western music. First, the root of the chord must be specified. This can be any note in the twelve-tone chromatic scale, using '#' to specify sharps and 'b' for flats. E.g., 'Ab', 'E', 'F#', etc.
+
+Next, the type of triad can be specified; no specifier indicates a major triad. A minor chord is denoted by a lowercase 'm', e.g., 'Em'. A diminished chord is specified by a lowercase 'o', e.g., 'Bm'. An augmented chord is given by a '+' character, e.g., 'D+'. Note that only one specifer can be given; a chord cannot be both diminished and augmented.
+
+If desired, a chord can be denoted as a seventh chord. Following the root and triad specifiers with a '7' adds a minor seventh to the triad, e.g., 'Db7'. However, if a diminished triad was specified, '7' will instead add a diminished minor seventh. For a half-diminished seventh chord, i.e. a diminished triad with a minor seventh, use 'x' as the triad specifier ('7' is not necessary), e.g., 'A#x'. 'M7' can be used to add a major seventh instead of a minor seventh, e.g., 'EM7'.
+
+Finally, a chord may be inverted. A single 'i' after the chord signifies the first inversion, e.g., 'Ci'. In the first inversion, the third of the chord becomes the bass note. 'ii' denotes the second inversion, e.g., 'Gmii'. This inversion makes the fifth of the chord the bass note. Seventh chords also have a third inversion, specified by 'iii', e.g., 'A#7iii'. The third inversion puts the seventh of the chord in the bass note position.
+
+In summary, every track must begin with a tempo, which can then be changed at any point in the track. Chords are constructed with components in the following order, with only the root of the chord being mandatory: root note, triad type, seventh type, and inversion type.
+
+In addition, if a tab follows the duration marking, octave up (8va) or octave down (8vb) can be specified.
+
+Rests are specified with a dash ('-') and also recieve a duration.
+
+Repeats are also supported. An opening repeat sign is represented as a pipe and a colon, '|:', while a closing repeat sign is written backwards, i.e., ':|'.
+
+As a final note, any line beginning with a hash ('#') is ignored and can be used to add comments.
+
+See resources/tracks for examples.

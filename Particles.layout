@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="linux64" />
+	<File name="ChordGen.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="3975" topLine="164" />
+	</File>
+	<File name="ChordGen.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="530" topLine="3" />
+	</File>
+	<File name="Cursor.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="65" topLine="0" />
+	</File>
+	<File name="Dependencies.hpp" open="0" top="0" tabpos="4">
+		<Cursor position="461" topLine="30" />
+	</File>
+	<File name="Element.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="45" topLine="0" />
+	</File>
+	<File name="Element.hpp" open="0" top="0" tabpos="4">
+		<Cursor position="2096" topLine="72" />
+	</File>
+	<File name="ErrorScreen.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="51" topLine="0" />
+	</File>
+	<File name="ErrorScreen.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="323" topLine="0" />
+	</File>
+	<File name="GameField.hpp" open="1" top="0" tabpos="5">
+		<Cursor position="6328" topLine="249" />
+	</File>
+	<File name="GameMenu.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="5107" topLine="132" />
+	</File>
+	<File name="GameMenu.hpp" open="0" top="0" tabpos="3">
+		<Cursor position="590" topLine="15" />
+	</File>
+	<File name="Group.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="2451" topLine="74" />
+	</File>
+	<File name="Group.hpp" open="0" top="0" tabpos="6">
+		<Cursor position="1089" topLine="46" />
+	</File>
+	<File name="Instructions.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="3951" topLine="111" />
+	</File>
+	<File name="Instructions.hpp" open="0" top="0" tabpos="1">
+		<Cursor position="1584" topLine="63" />
+	</File>
+	<File name="InterDir.hpp" open="0" top="0" tabpos="2">
+		<Cursor position="82" topLine="0" />
+	</File>
+	<File name="Interaction.hpp" open="0" top="0" tabpos="3">
+		<Cursor position="3931" topLine="164" />
+	</File>
+	<File name="Makefile" open="0" top="0" tabpos="1">
+		<Cursor position="62" topLine="0" />
+	</File>
+	<File name="MenuButtons.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="3185" topLine="95" />
+	</File>
+	<File name="MenuButtons.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="2480" topLine="89" />
+	</File>
+	<File name="MusicGenerator.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="4782" topLine="183" />
+	</File>
+	<File name="MusicGenerator.hpp" open="0" top="0" tabpos="1">
+		<Cursor position="1888" topLine="71" />
+	</File>
+	<File name="NoteSet.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="2734" topLine="0" />
+	</File>
+	<File name="NoteSet.hpp" open="0" top="0" tabpos="4">
+		<Cursor position="867" topLine="14" />
+	</File>
+	<File name="Options.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="6779" topLine="227" />
+	</File>
+	<File name="Options.hpp" open="0" top="0" tabpos="5">
+		<Cursor position="1980" topLine="80" />
+	</File>
+	<File name="Particle.cpp" open="1" top="1" tabpos="4">
+		<Cursor position="3976" topLine="145" />
+	</File>
+	<File name="Particle.hpp" open="1" top="0" tabpos="3">
+		<Cursor position="2672" topLine="108" />
+	</File>
+	<File name="PixelCosm.hpp" open="0" top="0" tabpos="3">
+		<Cursor position="981" topLine="54" />
+	</File>
+	<File name="PixelCosmApp.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="2008" topLine="44" />
+	</File>
+	<File name="PlayFunctions.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="1300" topLine="27" />
+	</File>
+	<File name="PlayFunctions.hpp" open="0" top="0" tabpos="2">
+		<Cursor position="335" topLine="3" />
+	</File>
+	<File name="SandParser.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="4588" topLine="156" />
+	</File>
+	<File name="SandParser.hpp" open="0" top="0" tabpos="1">
+		<Cursor position="4462" topLine="188" />
+	</File>
+	<File name="SaveHandler.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="5473" topLine="183" />
+	</File>
+	<File name="SaveHandler.hpp" open="0" top="0" tabpos="3">
+		<Cursor position="420" topLine="11" />
+	</File>
+	<File name="SoundEffects.hpp" open="0" top="0" tabpos="3">
+		<Cursor position="1830" topLine="56" />
+	</File>
+	<File name="TitleScreen.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="5916" topLine="157" />
+	</File>
+	<File name="TitleScreen.hpp" open="0" top="0" tabpos="3">
+		<Cursor position="1096" topLine="37" />
+	</File>
+	<File name="TrackScanner.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="5244" topLine="200" />
+	</File>
+	<File name="TrackScanner.hpp" open="0" top="0" tabpos="3">
+		<Cursor position="1528" topLine="46" />
+	</File>
+	<File name="Update.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="721" topLine="108" />
+	</File>
+	<File name="Update.hpp" open="0" top="0" tabpos="1">
+		<Cursor position="751" topLine="35" />
+	</File>
+	<File name="Waveforms.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="275" topLine="15" />
+	</File>
+	<File name="main.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="1426" topLine="61" />
+	</File>
+	<File name="resources/tracklist" open="0" top="0" tabpos="1">
+		<Cursor position="17" topLine="0" />
+	</File>
+	<File name="resources/tracks/bounce.track" open="0" top="0" tabpos="2">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="resources/tracks/fortress.track" open="0" top="0" tabpos="6">
+		<Cursor position="35" topLine="0" />
+	</File>
+	<File name="resources/tracks/lead.track" open="0" top="0" tabpos="1">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="resources/tracks/letting.track" open="0" top="0" tabpos="6">
+		<Cursor position="38" topLine="0" />
+	</File>
+	<File name="resources/tracks/sharksthird.track" open="0" top="0" tabpos="0">
+		<Cursor position="137" topLine="0" />
+	</File>
+	<File name="resources/tracks/slow.track" open="0" top="0" tabpos="1">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="sandsrc/std.sand" open="0" top="0" tabpos="1">
+		<Cursor position="4029" topLine="190" />
+	</File>
+</CodeBlocks_layout_file>

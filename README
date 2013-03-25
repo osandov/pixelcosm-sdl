@@ -1,0 +1,15 @@
+INSTALLATION
+
+Windows:
+	Navigate to the 'win32' downloads folder. Download the latest .zip file and extract it by right-clicking and selecting "Extract files" or something similar. Run 'sandbox.exe' to play.
+
+Linux:
+	Navigate to the 'linux32' or 'linux64' folder for 32-bit or 64-bit Linux, respectively. Download the latest .tar.gz archive. Untar it and run 'sandbox' to play.
+
+Mac OS X:
+	Coming soon. However, running the Windows version under Wine (http://www.winehq.org) should work.
+
+
+BUILD FROM SOURCE
+
+Coming soon.
